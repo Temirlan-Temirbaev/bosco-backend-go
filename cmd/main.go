@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	bosco_go_backend "bosco-backend"
@@ -34,7 +34,7 @@ func main() {
 }
 
 func initConfig() error {
-	viper.AddConfigPath("configs")
+	viper.AddConfigPath("config")
 	viper.SetConfigName("config")
 	return viper.ReadInConfig()
 }
