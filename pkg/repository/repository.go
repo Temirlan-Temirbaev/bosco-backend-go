@@ -1,8 +1,13 @@
 package repository
 
-import "github.com/jmoiron/sqlx"
+import (
+	"bosco-backend/pkg/model"
+	"bosco-backend/pkg/repository/postgres"
+	"github.com/jmoiron/sqlx"
+)
 
 type Authorization interface {
+	Create(user model.User) (int, error)
 }
 
 type Product interface {
@@ -22,5 +27,5 @@ type Repository struct {
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
-	return &Repository{}
+	return &Repository{Authorization: postgres.NewAuthPostgres(db)}
 }
