@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"bosco-backend/pkg/service"
+	"bosco-backend/internal/service"
 	"github.com/gin-gonic/gin"
 )
 

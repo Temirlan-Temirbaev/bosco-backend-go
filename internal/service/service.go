@@ -1,12 +1,14 @@
 package service
 
 import (
-	"bosco-backend/pkg/model"
-	"bosco-backend/pkg/repository"
+	"bosco-backend/internal/model"
+	"bosco-backend/internal/repository"
 )
 
 type Authorization interface {
 	CreateUser(user model.User) (int, error)
+	GetUser(user model.User) (model.User, error)
+	GenerateToken(user model.User) (string, error)
 }
 
 type Product interface {

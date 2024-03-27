@@ -1,13 +1,14 @@
 package repository
 
 import (
-	"bosco-backend/pkg/model"
-	"bosco-backend/pkg/repository/postgres"
+	"bosco-backend/internal/model"
+	"bosco-backend/internal/repository/postgres"
 	"github.com/jmoiron/sqlx"
 )
 
 type Authorization interface {
 	Create(user model.User) (int, error)
+	GetUser(username string, password string) (model.User, error)
 }
 
 type Product interface {
