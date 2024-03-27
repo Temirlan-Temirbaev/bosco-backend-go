@@ -2,9 +2,9 @@ package main
 
 import (
 	bosco_go_backend "bosco-backend"
-	"bosco-backend/pkg/handler"
-	"bosco-backend/pkg/repository"
-	"bosco-backend/pkg/service"
+	"bosco-backend/internal/handler"
+	"bosco-backend/internal/repository"
+	"bosco-backend/internal/service"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )

@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"bosco-backend/pkg/service"
+	"bosco-backend/internal/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +19,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		auth.POST("/login", h.login)
 		auth.POST("/registration", h.registration)
-		auth.POST("/check-login", h.checkLogin)
+		auth.GET("/check-login", h.UserIdentity, h.checkLogin)
 	}
 	api := router.Group("/api")
 	{
