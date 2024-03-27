@@ -34,3 +34,13 @@ func (repository *AuthPostgres) GetUser(username string, password string) (model
 	}
 	return user, nil
 }
+
+func (repository *AuthPostgres) GetUserById(id int) (model.User, error) {
+	var user model.User
+	query := fmt.Sprintf("SELECT id, username, role FROM %s WHERE id=$1", constants.USERS)
+	row := repository.db.QueryRow(query, id)
+	if err := row.Scan(&user.Id, &user.Username, &user.Role); err != nil {
+		return model.User{}, err
+	}
+	return user, nil
+}

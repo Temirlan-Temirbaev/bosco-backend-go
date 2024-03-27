@@ -9,6 +9,7 @@ import (
 type Authorization interface {
 	Create(user model.User) (int, error)
 	GetUser(username string, password string) (model.User, error)
+	GetUserById(id int) (model.User, error)
 }
 
 type Product interface {

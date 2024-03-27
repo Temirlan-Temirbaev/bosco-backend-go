@@ -56,15 +56,16 @@ func (h *Handler) registration(c *gin.Context) {
 }
 
 func (h *Handler) checkLogin(c *gin.Context) {
-
-	var input model.User
-	if err := c.BindJSON(&input); err != nil {
+	id, err := GetUserId(c)
+	if err != nil {
+		utils.NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	user, err := h.services.GetUserById(id)
+	if err != nil {
 		utils.NewErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	if err := validator.ValidateAuth(c, input); err != nil {
-		return
-	}
-
+	c.JSON(http.StatusOK, user)
 }
