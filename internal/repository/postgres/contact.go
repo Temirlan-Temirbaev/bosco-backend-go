@@ -34,3 +34,9 @@ func (repository ContactPostgres) GetAll() ([]model.Contact, error) {
 	err := repository.db.Select(&contacts, query)
 	return contacts, err
 }
+
+func (repository ContactPostgres) Delete(id int) error {
+	query := fmt.Sprintf("DELETE FROM %s WHERE id=$1", constants.CONTACTS)
+	_, err := repository.db.Exec(query, id)
+	return err
+}

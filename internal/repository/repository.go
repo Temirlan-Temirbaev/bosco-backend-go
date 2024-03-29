@@ -21,6 +21,7 @@ type Category interface {
 type Contact interface {
 	Create(contact model.Contact) (int, error)
 	GetAll() ([]model.Contact, error)
+	Delete(id int) error
 }
 
 type Repository struct {

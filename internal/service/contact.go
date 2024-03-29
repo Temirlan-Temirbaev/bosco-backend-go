@@ -20,3 +20,7 @@ func (service *ContactService) Create(contact model.Contact) (int, error) {
 func (service *ContactService) GetAll() ([]model.Contact, error) {
 	return service.repository.GetAll()
 }
+
+func (service *ContactService) Delete(id int) error {
+	return service.repository.Delete(id)
+}
