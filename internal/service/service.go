@@ -11,6 +11,7 @@ type Authorization interface {
 	GetUserById(id int) (model.User, error)
 	GenerateToken(user model.User) (string, error)
 	GetIdFromToken(accessToken string) (int, error)
+	GetRoleFromToken(accessToken string) (string, error)
 }
 
 type Product interface {
