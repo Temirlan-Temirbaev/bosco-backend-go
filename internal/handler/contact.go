@@ -14,7 +14,7 @@ func (h *Handler) createContact(c *gin.Context) {
 		return
 	}
 
-	id, err := h.services.Create(input)
+	id, err := h.services.Contact.Create(input)
 	if err != nil {
 		utils.NewErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -26,7 +26,15 @@ func (h *Handler) createContact(c *gin.Context) {
 }
 
 func (h *Handler) getContacts(c *gin.Context) {
+	contacts, err := h.services.Contact.GetAll()
+	if err != nil {
+		utils.NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
 
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"data": contacts,
+	})
 }
 
 func (h *Handler) editContact(c *gin.Context) {

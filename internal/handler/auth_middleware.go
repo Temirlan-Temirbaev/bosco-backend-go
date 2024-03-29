@@ -25,7 +25,7 @@ func (handler *Handler) UserIdentity(c *gin.Context) {
 		utils.NewErrorResponse(c, http.StatusUnauthorized, "Invalid token")
 		return
 	}
-	userId, err := handler.services.GetIdFromToken(headerParts[1])
+	userId, err := handler.services.Authorization.GetIdFromToken(headerParts[1])
 	if err != nil {
 		utils.NewErrorResponse(c, http.StatusUnauthorized, err.Error())
 		return
@@ -54,7 +54,7 @@ func (h *Handler) CheckRole(role string) gin.HandlerFunc {
 			utils.NewErrorResponse(c, http.StatusBadRequest, err.Error())
 			return
 		}
-		user, err := h.services.GetUserById(id)
+		user, err := h.services.Authorization.GetUserById(id)
 		if err != nil {
 			utils.NewErrorResponse(c, http.StatusBadRequest, err.Error())
 			return

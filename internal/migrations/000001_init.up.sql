@@ -18,10 +18,10 @@ CREATE TABLE IF NOT EXISTS products
 CREATE TABLE IF NOT EXISTS contacts
 (
     id          serial PRIMARY KEY,
-    coordinates text[]       not null,
+    coordinates text       not null,
     phone       varchar(255) not null,
     vip_phone   varchar(255) not null,
-    address     text[]       not null
+    address     text       not null
 );
 
 CREATE TABLE IF NOT EXISTS categories

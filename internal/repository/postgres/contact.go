@@ -5,7 +5,6 @@ import (
 	"bosco-backend/internal/model"
 	"fmt"
 	"github.com/jmoiron/sqlx"
-	"strings"
 )
 
 type ContactPostgres struct {
@@ -17,16 +16,21 @@ func NewContactPostgres(db *sqlx.DB) *ContactPostgres {
 }
 
 func (repository ContactPostgres) Create(contact model.Contact) (int, error) {
+	var id int
+
 	query := fmt.Sprintf("INSERT INTO %s (coordinates, phone, vip_phone, address) VALUES ($1, $2, $3, $4) RETURNING id", constants.CONTACTS)
 
-	coordinatesLiteral := "{" + strings.Join(contact.Coordinates, ",") + "}"
-	addressLiteral := "{" + strings.Join(contact.Address, ",") + "}"
-
-	var id int
-	err := repository.db.QueryRow(query, coordinatesLiteral, contact.Phone, contact.VipPhone, addressLiteral).Scan(&id)
-	if err != nil {
+	row := repository.db.QueryRow(query, contact.Coordinates, contact.Phone, contact.VipPhone, contact.Address)
+	if err := row.Scan(&id); err != nil {
 		return 0, err
 	}
 
 	return id, nil
+}
+
+func (repository ContactPostgres) GetAll() ([]model.Contact, error) {
+	var contacts []model.Contact
+	query := fmt.Sprintf("SELECT * FROM %s", constants.CONTACTS)
+	err := repository.db.Select(&contacts, query)
+	return contacts, err
 }
