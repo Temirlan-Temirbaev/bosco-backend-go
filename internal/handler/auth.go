@@ -19,12 +19,12 @@ func (h *Handler) login(c *gin.Context) {
 		return
 	}
 
-	user, err := h.services.GetUser(input)
+	user, err := h.services.Authorization.GetUser(input)
 	if err != nil {
 		utils.NewErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	token, err := h.services.GenerateToken(user)
+	token, err := h.services.Authorization.GenerateToken(user)
 	if err != nil {
 		utils.NewErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -61,7 +61,7 @@ func (h *Handler) checkLogin(c *gin.Context) {
 		utils.NewErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	user, err := h.services.GetUserById(id)
+	user, err := h.services.Authorization.GetUserById(id)
 	if err != nil {
 		utils.NewErrorResponse(c, http.StatusBadRequest, err.Error())
 		return

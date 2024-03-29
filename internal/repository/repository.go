@@ -19,6 +19,10 @@ type Category interface {
 }
 
 type Contact interface {
+	Create(contact model.Contact) (int, error)
+	GetAll() ([]model.Contact, error)
+	Delete(id int) error
+	Update(id int, contact model.Contact) error
 }
 
 type Repository struct {
@@ -29,5 +33,8 @@ type Repository struct {
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
-	return &Repository{Authorization: postgres.NewAuthPostgres(db)}
+	return &Repository{
+		Authorization: postgres.NewAuthPostgres(db),
+		Contact:       postgres.NewContactPostgres(db),
+	}
 }

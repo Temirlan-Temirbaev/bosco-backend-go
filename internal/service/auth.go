@@ -71,3 +71,22 @@ func (service *AuthService) GetIdFromToken(accessToken string) (int, error) {
 
 	return claims.Id, nil
 }
+
+func (service *AuthService) GetRoleFromToken(accessToken string) (string, error) {
+	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("Invalid signing method")
+		}
+
+		return []byte(constants.SigningKey), nil
+	})
+	if err != nil {
+		return "", nil
+	}
+	claims, ok := token.Claims.(*tokenClaims)
+	if !ok {
+		return "", errors.New("Not correct type of JWT token")
+	}
+
+	return claims.Role, nil
+}

@@ -11,6 +11,7 @@ type Authorization interface {
 	GetUserById(id int) (model.User, error)
 	GenerateToken(user model.User) (string, error)
 	GetIdFromToken(accessToken string) (int, error)
+	GetRoleFromToken(accessToken string) (string, error)
 }
 
 type Product interface {
@@ -19,6 +20,10 @@ type Product interface {
 type Category interface {
 }
 type Contact interface {
+	Create(contact model.Contact) (int, error)
+	GetAll() ([]model.Contact, error)
+	Delete(id int) error
+	Update(id int, contact model.Contact) error
 }
 
 type Service struct {
@@ -30,6 +35,7 @@ type Service struct {
 
 func NewService(r *repository.Repository) *Service {
 	return &Service{
-		Authorization: NewAuthService(r),
+		Authorization: NewAuthService(r.Authorization),
+		Contact:       NewContactService(r.Contact),
 	}
 }
