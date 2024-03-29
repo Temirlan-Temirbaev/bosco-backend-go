@@ -39,7 +39,24 @@ func (h *Handler) getContacts(c *gin.Context) {
 }
 
 func (h *Handler) editContact(c *gin.Context) {
-
+	var input model.Contact
+	if err := c.BindJSON(&input); err != nil {
+		utils.NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	contactId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		utils.NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	err = h.services.Contact.Update(contactId, input)
+	if err != nil {
+		utils.NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"success": true,
+	})
 }
 
 func (h *Handler) deleteContact(c *gin.Context) {

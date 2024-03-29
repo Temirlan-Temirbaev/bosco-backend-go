@@ -40,3 +40,9 @@ func (repository ContactPostgres) Delete(id int) error {
 	_, err := repository.db.Exec(query, id)
 	return err
 }
+
+func (repository ContactPostgres) Update(id int, contact model.Contact) error {
+	query := fmt.Sprintf("UPDATE %s SET coordinates=$1, address=$2, phone=$3, vip_phone=$4 WHERE id=$5", constants.CONTACTS)
+	_, err := repository.db.Exec(query, contact.Coordinates, contact.Address, contact.Phone, contact.VipPhone, id)
+	return err
+}

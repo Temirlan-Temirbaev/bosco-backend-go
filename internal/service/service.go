@@ -23,6 +23,7 @@ type Contact interface {
 	Create(contact model.Contact) (int, error)
 	GetAll() ([]model.Contact, error)
 	Delete(id int) error
+	Update(id int, contact model.Contact) error
 }
 
 type Service struct {

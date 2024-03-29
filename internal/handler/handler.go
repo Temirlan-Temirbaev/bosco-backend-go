@@ -26,7 +26,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		contact := api.Group("/contact")
 		{
 			contact.POST("/", h.UserIdentity, h.CheckRole("admin"), h.createContact)
-			contact.PUT("/:id", h.UserIdentity, h.editContact)
+			contact.PUT("/:id", h.UserIdentity, h.CheckRole("admin"), h.editContact)
 			contact.GET("/", h.getContacts)
 			contact.DELETE("/:id", h.UserIdentity, h.CheckRole("admin"), h.deleteContact)
 		}
