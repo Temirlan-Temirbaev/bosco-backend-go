@@ -25,25 +25,25 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		contact := api.Group("/contact")
 		{
-			contact.POST("/", h.createContact)
-			contact.PUT("/:id", h.editContact)
+			contact.POST("/", h.UserIdentity, h.createContact)
+			contact.PUT("/:id", h.UserIdentity, h.editContact)
 			contact.GET("/", h.getContacts)
-			contact.DELETE("/:id", h.deleteContact)
+			contact.DELETE("/:id", h.UserIdentity, h.deleteContact)
 		}
 		product := api.Group("/product")
 		{
-			product.POST("/", h.createProduct)
+			product.POST("/", h.UserIdentity, h.createProduct)
 			product.GET("/", h.getProducts)
-			product.DELETE("/:id", h.deleteProduct)
-			product.PUT("/:id", h.editProduct)
+			product.DELETE("/:id", h.UserIdentity, h.deleteProduct)
+			product.PUT("/:id", h.UserIdentity, h.editProduct)
 		}
 		category := api.Group("/category")
 		{
-			category.POST("/", h.createCategory)
+			category.POST("/", h.UserIdentity, h.createCategory)
 			category.GET("/", h.getCategories)
 			category.GET("/:id", h.getCategoryById)
-			category.PUT("/:id", h.editCategory)
-			category.DELETE("/:id", h.deleteCategory)
+			category.PUT("/:id", h.UserIdentity, h.editCategory)
+			category.DELETE("/:id", h.UserIdentity, h.deleteCategory)
 		}
 	}
 	return router

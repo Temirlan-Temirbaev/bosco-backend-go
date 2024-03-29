@@ -19,6 +19,7 @@ type Product interface {
 type Category interface {
 }
 type Contact interface {
+	Create(contact model.Contact) (int, error)
 }
 
 type Service struct {
@@ -30,6 +31,7 @@ type Service struct {
 
 func NewService(r *repository.Repository) *Service {
 	return &Service{
-		Authorization: NewAuthService(r),
+		Authorization: NewAuthService(r.Authorization),
+		Contact:       NewContactService(r.Contact),
 	}
 }
