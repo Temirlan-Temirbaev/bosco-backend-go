@@ -32,18 +32,18 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		}
 		product := api.Group("/product")
 		{
-			product.POST("/", h.UserIdentity, h.createProduct)
+			product.POST("/", h.UserIdentity, h.CheckRole("admin"), h.createProduct)
 			product.GET("/", h.getProducts)
-			product.DELETE("/:id", h.UserIdentity, h.deleteProduct)
-			product.PUT("/:id", h.UserIdentity, h.editProduct)
+			product.DELETE("/:id", h.UserIdentity, h.CheckRole("admin"), h.deleteProduct)
+			product.PUT("/:id", h.UserIdentity, h.CheckRole("admin"), h.editProduct)
 		}
 		category := api.Group("/category")
 		{
-			category.POST("/", h.UserIdentity, h.createCategory)
+			category.POST("/", h.UserIdentity, h.CheckRole("admin"), h.createCategory)
 			category.GET("/", h.getCategories)
 			category.GET("/:id", h.getCategoryById)
-			category.PUT("/:id", h.UserIdentity, h.editCategory)
-			category.DELETE("/:id", h.UserIdentity, h.deleteCategory)
+			category.PUT("/:id", h.UserIdentity, h.CheckRole("admin"), h.editCategory)
+			category.DELETE("/:id", h.UserIdentity, h.CheckRole("admin"), h.deleteCategory)
 		}
 	}
 	return router
