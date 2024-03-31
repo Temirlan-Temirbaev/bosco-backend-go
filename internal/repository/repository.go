@@ -16,6 +16,11 @@ type Product interface {
 }
 
 type Category interface {
+	Create(category model.Category) (int, error)
+	Update(id int, category model.Category) error
+	Delete(id int) error
+	GetAll() ([]model.Category, error)
+	GetById(id int) (model.Category, error)
 }
 
 type Contact interface {
@@ -36,5 +41,6 @@ func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: postgres.NewAuthPostgres(db),
 		Contact:       postgres.NewContactPostgres(db),
+		Category:      postgres.NewCategoryPostgres(db),
 	}
 }

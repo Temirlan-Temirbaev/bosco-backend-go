@@ -18,6 +18,11 @@ type Product interface {
 }
 
 type Category interface {
+	Create(category model.Category) (int, error)
+	Update(id int, category model.Category) error
+	Delete(id int) error
+	GetAll() ([]model.Category, error)
+	GetById(id int) (model.Category, error)
 }
 type Contact interface {
 	Create(contact model.Contact) (int, error)
@@ -37,5 +42,6 @@ func NewService(r *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(r.Authorization),
 		Contact:       NewContactService(r.Contact),
+		Category:      NewCategoryService(r.Category),
 	}
 }

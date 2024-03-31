@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS products
 (
     id          serial PRIMARY KEY,
-    name        text[] not null,
-    description text[],
+    name        text not null,
+    description text,
     price       int    not null,
     discount    int
 );
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS contacts
 CREATE TABLE IF NOT EXISTS categories
 (
     id   serial PRIMARY KEY,
-    name text[] not null
+    name text not null
 );
 
 CREATE TABLE IF NOT EXISTS category_items
